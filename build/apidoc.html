@@ -63,6 +63,15 @@
 
         <li>
 
+            <a class="apidocElementLiA" href="#apidoc.element.purify-css.purify-css">
+            function <span class="apidocSignatureSpan"></span>purify-css
+            <span class="apidocSignatureSpan">(searchThrough, css, options, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
             <a class="apidocElementLiA" href="#apidoc.element.purify-css.CssTreeWalker">
             function <span class="apidocSignatureSpan">purify-css.</span>CssTreeWalker
             <span class="apidocSignatureSpan">(code, plugins)</span>
@@ -82,6 +91,24 @@
         <li>
 
             <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">purify-css.</span>CssTreeWalker.prototype</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">purify-css.</span>ExtractWordsUtil</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">purify-css.</span>FileUtil</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">purify-css.</span>PrintUtil</span>
 
         </li>
 
@@ -164,6 +191,99 @@
 
     </ol></li>
 
+    <li class="apidocModuleLi"><a href="#apidoc.module.purify-css.ExtractWordsUtil">module purify-css.ExtractWordsUtil</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.purify-css.ExtractWordsUtil.getAllWordsInContent">
+            function <span class="apidocSignatureSpan">purify-css.ExtractWordsUtil.</span>getAllWordsInContent
+            <span class="apidocSignatureSpan">(content)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.purify-css.ExtractWordsUtil.getAllWordsInSelector">
+            function <span class="apidocSignatureSpan">purify-css.ExtractWordsUtil.</span>getAllWordsInSelector
+            <span class="apidocSignatureSpan">(selector)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.purify-css.FileUtil">module purify-css.FileUtil</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.purify-css.FileUtil.compressCode">
+            function <span class="apidocSignatureSpan">purify-css.FileUtil.</span>compressCode
+            <span class="apidocSignatureSpan">(code)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.purify-css.FileUtil.concatFiles">
+            function <span class="apidocSignatureSpan">purify-css.FileUtil.</span>concatFiles
+            <span class="apidocSignatureSpan">(files, options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.purify-css.FileUtil.filesToSource">
+            function <span class="apidocSignatureSpan">purify-css.FileUtil.</span>filesToSource
+            <span class="apidocSignatureSpan">(files, type)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.purify-css.FileUtil.getFilesFromPatternArray">
+            function <span class="apidocSignatureSpan">purify-css.FileUtil.</span>getFilesFromPatternArray
+            <span class="apidocSignatureSpan">(fileArray)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.purify-css.PrintUtil">module purify-css.PrintUtil</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.purify-css.PrintUtil.printInfo">
+            function <span class="apidocSignatureSpan">purify-css.PrintUtil.</span>printInfo
+            <span class="apidocSignatureSpan">(endingLength)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.purify-css.PrintUtil.printRejected">
+            function <span class="apidocSignatureSpan">purify-css.PrintUtil.</span>printRejected
+            <span class="apidocSignatureSpan">(rejectedTwigs)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.purify-css.PrintUtil.startLog">
+            function <span class="apidocSignatureSpan">purify-css.PrintUtil.</span>startLog
+            <span class="apidocSignatureSpan">(cssLength)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
     <li class="apidocModuleLi"><a href="#apidoc.module.purify-css.SelectorFilter">module purify-css.SelectorFilter</a><ol>
 
         <li>
@@ -224,6 +344,62 @@
 
 
     <h2>
+        <a href="#apidoc.element.purify-css.purify-css" id="apidoc.element.purify-css.purify-css">
+        function <span class="apidocSignatureSpan"></span>purify-css
+        <span class="apidocSignatureSpan">(searchThrough, css, options, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">purify-css = function (searchThrough, css, options, callback) {
+  if (typeof options === &#x27;function&#x27;) {
+    callback = options;
+    options = {};
+  }
+  options = getOptions(options);
+
+  var cssString = FileUtil.filesToSource(css, &#x27;css&#x27;);
+  var content = FileUtil.filesToSource(searchThrough, &#x27;content&#x27;);
+
+  PrintUtil.startLog(minify(cssString).length);
+
+  var wordsInContent = getAllWordsInContent(content);
+
+  var selectorFilter = new SelectorFilter(wordsInContent, options.whitelist);
+
+  var tree = new CssTreeWalker(cssString, [selectorFilter]);
+  tree.beginReading();
+  var source = tree.toString();
+
+  if (options.minify) {
+    source = minify(source);
+  }
+
+  if (options.info &#x26;&#x26; options.minify) {
+    PrintUtil.printInfo(source.length);
+  } else if (options.info &#x26;&#x26; !options.minify) {
+    PrintUtil.printInfo(minify(source).length);
+  }
+
+  if (options.rejected) {
+    PrintUtil.printRejected(selectorFilter.rejectedSelectors);
+  }
+
+  if (!options.output) {
+    return callback ? callback(source) : source;
+  } else {
+    fs.writeFile(options.output, source, function (err) {
+      if (err) {
+        return err;
+      }
+    });
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
         <a href="#apidoc.element.purify-css.CssTreeWalker" id="apidoc.element.purify-css.CssTreeWalker">
         function <span class="apidocSignatureSpan">purify-css.</span>CssTreeWalker
         <span class="apidocSignatureSpan">(code, plugins)</span>
@@ -260,6 +436,12 @@
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
+
+
+
+
+
+
 
 
 
@@ -309,7 +491,23 @@
   this.ast = rework(this.startingSource)
     .use(this.readPlugin.bind(this));
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+PrintUtil.startLog(minify(cssString).length);
+
+var wordsInContent = getAllWordsInContent(content);
+
+var selectorFilter = new SelectorFilter(wordsInContent, options.whitelist);
+
+var tree = new CssTreeWalker(cssString, [selectorFilter]);
+tree.<span class="apidocCodeKeywordSpan">beginReading</span>();
+var source = tree.toString();
+
+if (options.minify) {
+  source = minify(source);
+}
+
+if (options.info &#x26;&#x26; options.minify) {
+...</pre></li>
     </ul>
 
 
@@ -472,6 +670,395 @@ return &#x27;&#x27;;
 
 CssTreeWalker.prototype.removeEmptyRules = function (rules) {
 var emptyRules = [];
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.purify-css.ExtractWordsUtil" id="apidoc.module.purify-css.ExtractWordsUtil">module purify-css.ExtractWordsUtil</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.purify-css.ExtractWordsUtil.getAllWordsInContent" id="apidoc.element.purify-css.ExtractWordsUtil.getAllWordsInContent">
+        function <span class="apidocSignatureSpan">purify-css.ExtractWordsUtil.</span>getAllWordsInContent
+        <span class="apidocSignatureSpan">(content)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">getAllWordsInContent = function (content) {
+  var used = {
+    // Always include html and body.
+    html: true,
+    body: true
+  };
+  var word = &#x27;&#x27;;
+
+  for (var i = 0; i &#x3c; content.length; i++) {
+    var chr = content[i];
+
+    if (chr.match(/[a-z]+/)) {
+      word += chr;
+    } else {
+      used[word] = true;
+      word = &#x27;&#x27;;
+    }
+  }
+
+  used[word] = true;
+
+  return used;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.purify-css.ExtractWordsUtil.getAllWordsInSelector" id="apidoc.element.purify-css.ExtractWordsUtil.getAllWordsInSelector">
+        function <span class="apidocSignatureSpan">purify-css.ExtractWordsUtil.</span>getAllWordsInSelector
+        <span class="apidocSignatureSpan">(selector)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">getAllWordsInSelector = function (selector) {
+  // Remove attr selectors. &#x22;a[href...]&#x22;&#x22; will become &#x22;a&#x22;.
+  selector = selector.replace(/\[(.+?)\]/g, &#x27;&#x27;).toLowerCase();
+
+  // If complex attr selector (has a bracket in it) just leave
+  // the selector in. ¯\_(ツ)_/¯
+  if (selector.indexOf(&#x27;[&#x27;) !== -1 || selector.indexOf(&#x27;]&#x27;) !== -1) {
+    return [];
+  }
+
+  var words = [];
+  var word = &#x27;&#x27;;
+  var skipNextWord = false;
+
+  for (var i = 0; i &#x3c; selector.length; i++) {
+    var letter = selector[i];
+
+    if (skipNextWord &#x26;&#x26; (letter !== &#x27;.&#x27; || letter !== &#x27;#&#x27; || letter !== &#x27; &#x27;)) {
+      continue;
+    }
+
+    // If pseudoclass or universal selector, skip the next word
+    if (letter === &#x27;:&#x27; || letter === &#x27;*&#x27;) {
+      addWord(words, word);
+      word = &#x27;&#x27;;
+      skipNextWord = true;
+      continue;
+    }
+
+    if (letter.match(/[a-z]+/)) {
+      word += letter;
+    } else {
+      addWord(words, word);
+      word = &#x27;&#x27;;
+      skipNextWord = false;
+    }
+  }
+
+  addWord(words, word);
+  return words;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.purify-css.FileUtil" id="apidoc.module.purify-css.FileUtil">module purify-css.FileUtil</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.purify-css.FileUtil.compressCode" id="apidoc.element.purify-css.FileUtil.compressCode">
+        function <span class="apidocSignatureSpan">purify-css.FileUtil.</span>compressCode
+        <span class="apidocSignatureSpan">(code)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">compressCode = function (code) {
+  try {
+    // Try to minimize the code as much as possible, removing noise.
+    var ast = UglifyJS.parse(code);
+    ast.figure_out_scope();
+<span class="apidocCodeCommentSpan">    /* eslint-disable new-cap */
+</span>    var compressor = UglifyJS.Compressor({warnings: false});
+    /* eslint-enable new-cap */
+    ast = ast.transform(compressor);
+    ast.figure_out_scope();
+    ast.compute_char_frequency();
+    ast.mangle_names({toplevel: true});
+    code = ast.print_to_string().toLowerCase();
+  } catch (e) {
+    // If compression fails, assume it&#x27;s not a JS file and return the full code.
+  }
+
+  return code.toLowerCase();
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+return files.reduce(function (total, file) {
+  var code = &#x27;&#x27;;
+
+  try {
+    code = fs.readFileSync(file, &#x27;utf8&#x27;);
+    if (options.compress) {
+      code = FileUtil.<span class="apidocCodeKeywordSpan">compressCode</span>(code);
+    }
+  } catch (e) {
+    console.warn(&#x27;\nWARNING: Could not read &#x27; + file + &#x27;.&#x27;);
+  }
+
+  return total + code + &#x27; &#x27;;
+}, &#x27;&#x27;);
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.purify-css.FileUtil.concatFiles" id="apidoc.element.purify-css.FileUtil.concatFiles">
+        function <span class="apidocSignatureSpan">purify-css.FileUtil.</span>concatFiles
+        <span class="apidocSignatureSpan">(files, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">concatFiles = function (files, options) {
+  options = options || {};
+
+  return files.reduce(function (total, file) {
+    var code = &#x27;&#x27;;
+
+    try {
+      code = fs.readFileSync(file, &#x27;utf8&#x27;);
+      if (options.compress) {
+        code = FileUtil.compressCode(code);
+      }
+    } catch (e) {
+      console.warn(&#x27;\nWARNING: Could not read &#x27; + file + &#x27;.&#x27;);
+    }
+
+    return total + code + &#x27; &#x27;;
+  }, &#x27;&#x27;);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+  filesToSource: function (files, type) {
+var isContent = type === &#x27;content&#x27;;
+var options = {compress: isContent};
+
+if (Array.isArray(files)) {
+  files = FileUtil.getFilesFromPatternArray(files);
+  return FileUtil.<span class="apidocCodeKeywordSpan">concatFiles</span>(files, options);
+}
+
+// &#x27;files&#x27; is already a source string.
+if (isContent) {
+  return FileUtil.compressCode(files);
+} else {
+  return files;
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.purify-css.FileUtil.filesToSource" id="apidoc.element.purify-css.FileUtil.filesToSource">
+        function <span class="apidocSignatureSpan">purify-css.FileUtil.</span>filesToSource
+        <span class="apidocSignatureSpan">(files, type)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">filesToSource = function (files, type) {
+  var isContent = type === &#x27;content&#x27;;
+  var options = {compress: isContent};
+
+  if (Array.isArray(files)) {
+    files = FileUtil.getFilesFromPatternArray(files);
+    return FileUtil.concatFiles(files, options);
+  }
+
+  // &#x27;files&#x27; is already a source string.
+  if (isContent) {
+    return FileUtil.compressCode(files);
+  } else {
+    return files;
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+var purify = function (searchThrough, css, options, callback) {
+if (typeof options === &#x27;function&#x27;) {
+  callback = options;
+  options = {};
+}
+options = getOptions(options);
+
+var cssString = FileUtil.<span class="apidocCodeKeywordSpan">filesToSource</span>(css, &#x27;css&#x27;);
+var content = FileUtil.filesToSource(searchThrough, &#x27;content&#x27;);
+
+PrintUtil.startLog(minify(cssString).length);
+
+var wordsInContent = getAllWordsInContent(content);
+
+var selectorFilter = new SelectorFilter(wordsInContent, options.whitelist);
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.purify-css.FileUtil.getFilesFromPatternArray" id="apidoc.element.purify-css.FileUtil.getFilesFromPatternArray">
+        function <span class="apidocSignatureSpan">purify-css.FileUtil.</span>getFilesFromPatternArray
+        <span class="apidocSignatureSpan">(fileArray)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">getFilesFromPatternArray = function (fileArray) {
+  var sourceFiles = {};
+
+  fileArray.forEach(function (string) {
+    try {
+      // See if string is a filepath, not a file pattern.
+      fs.statSync(string);
+      sourceFiles[string] = true;
+    } catch (e) {
+      var files = glob.sync(string);
+      files.forEach(function (file) {
+        sourceFiles[file] = true;
+      });
+    }
+  });
+
+  return Object.keys(sourceFiles);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  },
+
+  filesToSource: function (files, type) {
+var isContent = type === &#x27;content&#x27;;
+var options = {compress: isContent};
+
+if (Array.isArray(files)) {
+  files = FileUtil.<span class="apidocCodeKeywordSpan">getFilesFromPatternArray</span>(files);
+  return FileUtil.concatFiles(files, options);
+}
+
+// &#x27;files&#x27; is already a source string.
+if (isContent) {
+  return FileUtil.compressCode(files);
+} else {
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.purify-css.PrintUtil" id="apidoc.module.purify-css.PrintUtil">module purify-css.PrintUtil</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.purify-css.PrintUtil.printInfo" id="apidoc.element.purify-css.PrintUtil.printInfo">
+        function <span class="apidocSignatureSpan">purify-css.PrintUtil.</span>printInfo
+        <span class="apidocSignatureSpan">(endingLength)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">printInfo = function (endingLength) {
+  var logFn = console.error;
+  logFn.call(null, &#x27;##################################&#x27;);
+  logFn.call(null, &#x27;PurifyCSS has reduced the file size by ~&#x27; +
+    (((beginningLength - endingLength) / beginningLength) * 100).toFixed(1) + &#x27;%&#x27;);
+  logFn.call(null, &#x27;##################################&#x27;);
+  logFn.call(null, &#x27;This function took: &#x27;, new Date() - startTime, &#x27;ms&#x27;);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+var source = tree.toString();
+
+if (options.minify) {
+  source = minify(source);
+}
+
+if (options.info &#x26;&#x26; options.minify) {
+  PrintUtil.<span class="apidocCodeKeywordSpan">printInfo</span>(source.length);
+} else if (options.info &#x26;&#x26; !options.minify) {
+  PrintUtil.printInfo(minify(source).length);
+}
+
+if (options.rejected) {
+  PrintUtil.printRejected(selectorFilter.rejectedSelectors);
+}
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.purify-css.PrintUtil.printRejected" id="apidoc.element.purify-css.PrintUtil.printRejected">
+        function <span class="apidocSignatureSpan">purify-css.PrintUtil.</span>printRejected
+        <span class="apidocSignatureSpan">(rejectedTwigs)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">printRejected = function (rejectedTwigs) {
+  var logFn = console.error;
+  logFn.call(null, &#x27;##################################&#x27;);
+  logFn.call(null, &#x27;Rejected selectors:&#x27;);
+  logFn.call(null, rejectedTwigs.join(&#x27;\n&#x27;));
+  logFn.call(null, &#x27;##################################&#x27;);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+if (options.info &#x26;&#x26; options.minify) {
+  PrintUtil.printInfo(source.length);
+} else if (options.info &#x26;&#x26; !options.minify) {
+  PrintUtil.printInfo(minify(source).length);
+}
+
+if (options.rejected) {
+  PrintUtil.<span class="apidocCodeKeywordSpan">printRejected</span>(selectorFilter.rejectedSelectors);
+}
+
+if (!options.output) {
+  return callback ? callback(source) : source;
+} else {
+  fs.writeFile(options.output, source, function (err) {
+    if (err) {
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.purify-css.PrintUtil.startLog" id="apidoc.element.purify-css.PrintUtil.startLog">
+        function <span class="apidocSignatureSpan">purify-css.PrintUtil.</span>startLog
+        <span class="apidocSignatureSpan">(cssLength)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">startLog = function (cssLength) {
+  startTime = new Date();
+  beginningLength = cssLength;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  options = {};
+}
+options = getOptions(options);
+
+var cssString = FileUtil.filesToSource(css, &#x27;css&#x27;);
+var content = FileUtil.filesToSource(searchThrough, &#x27;content&#x27;);
+
+PrintUtil.<span class="apidocCodeKeywordSpan">startLog</span>(minify(cssString).length);
+
+var wordsInContent = getAllWordsInContent(content);
+
+var selectorFilter = new SelectorFilter(wordsInContent, options.whitelist);
+
+var tree = new CssTreeWalker(cssString, [selectorFilter]);
+tree.beginReading();
 ...</pre></li>
     </ul>
 
